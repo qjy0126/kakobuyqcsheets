@@ -113945,12 +113945,14 @@ KF.products = [
 
 (function () {
   const cover = {};
+  const prefer = { other: "img/products/7770013729.jpg" };
   KF.products.forEach(function (p) {
     if (!cover[p.category]) cover[p.category] = p.image;
   });
   KF.categories.forEach(function (c) {
-    if (cover[c.slug]) c.image = cover[c.slug];
+    if (prefer[c.slug]) c.image = prefer[c.slug];
+    else if (cover[c.slug]) c.image = cover[c.slug];
   });
-  if (cover.shoes) KF.allProductImage = cover.shoes;
+  KF.allProductImage = "img/products/7784475023.jpg";
   if (KF.applyExtraCategories) KF.applyExtraCategories();
 })();

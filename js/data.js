@@ -40,9 +40,9 @@ KF.categories = [
   { slug: "underwear", label: "Underpants", image: "img/products/7761903780.jpg" },
   { slug: "jersey", label: "Jersey", image: "img/products/7772857134.jpg" },
   { slug: "accessories", label: "Accessories", image: "img/products/7773007666.jpg" },
-  { slug: "other", label: "Other Stuff", image: "img/products/7779924357.jpg" },
+  { slug: "other", label: "Other Stuff", image: "img/products/7770013729.jpg" },
 ];
-KF.allProductImage = "img/products/7652933295.jpg";
+KF.allProductImage = "img/products/7784475023.jpg";
 
 KF.collections = ["Court", "Fleece", "Denim", "Outdoor", "Matchday", "Desk", "Travel", "Workwear", "Eyewear", "Timepiece"];
 
@@ -129,7 +129,7 @@ KF.applyExtraCategories = () => {
 
 KF.money = (n) => `$${n.toFixed(2)}`;
 KF.invite = {
-  kakobuy: "vaxp6",
+  kakobuy: "f6xmh",
   oopbuy: "R28A1X6T7",
   mulebuy: "201207480",
   acbuy: "XQFW6M",
@@ -157,6 +157,9 @@ KF.agentUrl = (agentId, sourceUrl) => {
   const L = KF.listing(sourceUrl);
   const enc = encodeURIComponent(L.url);
   if (agentId === "kakobuy") {
+    if (L.channel === "weidian" && L.id) {
+      return `https://www.kakobuy.com/item/details?url=https%3A%2F%2Fweidian.com%2Fitem.html%3FitemID%3D${L.id}&affcode=${KF.invite.kakobuy}`;
+    }
     return `https://www.kakobuy.com/item/details?url=${enc}&affcode=${KF.invite.kakobuy}`;
   }
   if (agentId === "oopbuy") {

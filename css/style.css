@@ -529,19 +529,61 @@ a.story-card { cursor: pointer; }
 
 .site-footer {
   margin-top: 48px;
-  padding: 32px 0 24px;
+  padding: 40px 0 32px;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 14px;
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 32px 24px;
 }
-.site-footer a { font-weight: 600; color: var(--ink); }
-.disclaimer { font-size: 12px; line-height: 1.6; }
+.footer-brand {
+  display: inline-block;
+  margin: 0 0 12px;
+  color: var(--pink);
+  font-weight: 800;
+  font-size: 18px;
+}
+.footer-col h3 {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+}
+.footer-col p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  max-width: 280px;
+}
+.footer-col a {
+  display: block;
+  margin: 0 0 8px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.footer-col a:hover { color: var(--ink); }
+.footer-col a.footer-brand {
+  margin: 0 0 12px;
+  color: var(--pink);
+  font-size: 18px;
+}
+.footer-col a.footer-brand:hover { color: var(--pink); }
+.legal-box {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin: 24px 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.legal-box p { margin: 0 0 12px; }
+.legal-box p:last-child { margin: 0; }
+.legal-box a { color: var(--pink); font-weight: 700; }
 
 .catalog { padding: 28px 0 64px; }
 .catalog-top {
@@ -1093,9 +1135,10 @@ select, .search-input {
 @media (max-width: 980px) {
   .nav { display: none; }
   .menu-btn { display: grid; }
-  .hero-grid, .feature-grid, .tool-grid, .post-grid, .item-layout, .footer-grid, .trust-grid, .story-grid {
+  .hero-grid, .feature-grid, .tool-grid, .post-grid, .item-layout, .trust-grid, .story-grid {
     grid-template-columns: 1fr;
   }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
   .gallery { grid-template-columns: 1fr; }
   .thumbs { flex-direction: row; overflow-x: auto; }
   .thumbs button { width: 64px; flex: 0 0 64px; }
@@ -1106,6 +1149,7 @@ select, .search-input {
   .post-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
   .cat-grid { grid-template-columns: 1fr 1fr; }
   .product-grid { grid-template-columns: 1fr 1fr; }
   .post-grid { grid-template-columns: 1fr; }

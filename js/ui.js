@@ -63,25 +63,35 @@
   function footer() {
     return `
       <footer class="site-footer">
-        <div class="wrap footer-grid">
-          <div>
-            <strong>Kakobuy Spreadsheet</strong>
-            <p class="disclaimer">Independent directory for kakobuyqcsheets.com. Not affiliated with Kakobuy, Taobao, Weidian, 1688, or Tmall. We do not process orders or payments.</p>
-          </div>
-          <div>
-            <p><a href="shop.html">Shop all</a></p>
-            <p><a href="guides.html">Guides</a></p>
-            <p><a href="about.html">About</a></p>
-            <p><a href="privacy.html">Privacy</a></p>
-            <p><a href="author.html?id=kakospreadsheet" rel="author">Editor</a></p>
-            <p><a href="${KF.site.sheetUrl}" target="_blank" rel="noopener">Google Sheet</a></p>
-          </div>
-          <div>
-            <p>Domain: <strong>kakobuyqcsheets.com</strong></p>
-            <p>Updated ${KF.site.updated}</p>
+        <div class="wrap">
+          <div class="footer-grid">
+            <div class="footer-col">
+              <a class="footer-brand" href="index.html">Kakobuy Spreadsheet</a>
+              <p>Independent Kakobuy Spreadsheet with QC photos and listing links. We do not process orders or payments. Not officially affiliated with Kakobuy.</p>
+            </div>
+            <div class="footer-col">
+              <h3>Products</h3>
+              <a href="shop.html?cat=shoes">Kakobuy Shoes</a>
+              <a href="shop.html?cat=hoodies">Kakobuy Hoodies</a>
+              <a href="shop.html?cat=t-shirts">Kakobuy Tees</a>
+              <a href="shop.html?cat=jackets">Kakobuy Jackets</a>
+              <a href="shop.html">Shop all</a>
+            </div>
+            <div class="footer-col">
+              <h3>Guides</h3>
+              <a href="guides.html">How to shop this catalog</a>
+              <a href="guide.html?slug=read-qc">QC photos</a>
+              <a href="guide.html?slug=first-order">First Kakobuy order</a>
+              <a href="guides.html">All guides</a>
+            </div>
+            <div class="footer-col">
+              <h3>Quick Links</h3>
+              <a href="privacy.html">Privacy Policy</a>
+              <a href="terms.html">Terms &amp; Disclaimer</a>
+              <a href="about.html">About</a>
+            </div>
           </div>
         </div>
-        <div class="wrap disclaimer">Trademarks belong to their owners. Verify listings, QC, and shipping on Kakobuy before you pay.</div>
       </footer>
     `;
   }
