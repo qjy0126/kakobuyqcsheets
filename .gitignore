@@ -1,0 +1,9 @@
+.DS_Store
+.~*
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+img/products/*-2.jpg
+img/products/*-3.jpg
