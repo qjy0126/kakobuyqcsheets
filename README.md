@@ -27,3 +27,5 @@ python3 -m http.server 5173
 - `www.kakobuyqcsheets.com` 用 CNAME 指向 `qjy0126.github.io`
 
 生效后访问 https://kakobuyqcsheets.com
+
+部署到 Cloudflare 时不要上传 `.git`。仓库里的 `.assetsignore` 会排除 Git 历史、表格和脚本，只发布网页和商品图。商品图每张大约几十 KB，不会触发 25MB 限制。
