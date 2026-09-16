@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Download 2 extra Weidian photos per product into img/products/{id}-2.jpg and {id}-3.jpg."""
+"""Download 2 extra Weidian photos per product into img/products/{id}-2.webp and {id}-3.webp."""
 import json
 import shutil
 import signal
-import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from io import BytesIO
 from pathlib import Path
 from urllib.parse import quote
 from urllib.request import Request, urlopen
+
+from PIL import Image
 
 ROOT = Path("/Users/cusky/Desktop/kakobuy")
 OUT = ROOT / "img/products"
@@ -26,7 +28,7 @@ WORKERS = 8
 
 def product_ids():
     ids = []
-    for path in OUT.glob("*.jpg"):
+    for path in OUT.glob("*.webp"):
         stem = path.stem
         if stem.endswith("-2") or stem.endswith("-3"):
             continue
@@ -36,8 +38,8 @@ def product_ids():
 
 
 def have_pair(folder, item_id):
-    a = folder / f"{item_id}-2.jpg"
-    b = folder / f"{item_id}-3.jpg"
+    a = folder / f"{item_id}-2.webp"
+    b = folder / f"{item_id}-3.webp"
     return a.exists() and a.stat().st_size > 800 and b.exists() and b.stat().st_size > 800
 
 
@@ -48,7 +50,7 @@ def have_extras(item_id):
 def publish():
     STAGE.mkdir(parents=True, exist_ok=True)
     copied = 0
-    for path in STAGE.glob("*.jpg"):
+    for path in STAGE.glob("*.webp"):
         dest = OUT / path.name
         if dest.exists() and dest.stat().st_size >= path.stat().st_size:
             continue
@@ -102,31 +104,33 @@ def sku_urls(item_id):
     return []
 
 
-def shrink(dest):
-    if not dest.exists() or dest.stat().st_size < 180000:
-        return
-    tmp = dest.with_suffix(".tmp.jpg")
-    subprocess.run(
-        ["sips", "-s", "format", "jpeg", "-Z", "800", str(dest), "--out", str(tmp)],
-        capture_output=True,
-        check=False,
-    )
-    if tmp.exists() and tmp.stat().st_size > 800:
-        dest.write_bytes(tmp.read_bytes())
-        tmp.unlink(missing_ok=True)
+def shrink(dest, blob=None):
+    data = blob if blob is not None else (dest.read_bytes() if dest.exists() else b"")
+    if len(data) < 800:
+        return False
+    im = Image.open(BytesIO(data))
+    im.load()
+    if im.mode not in ("RGB", "L"):
+        im = im.convert("RGB")
+    elif im.mode == "L":
+        im = im.convert("RGB")
+    if max(im.size) > 560:
+        im.thumbnail((560, 560), Image.Resampling.LANCZOS)
+    buf = BytesIO()
+    im.save(buf, format="WEBP", quality=72, method=4)
+    dest.write_bytes(buf.getvalue())
+    return True
 
 
 def download(url, dest):
     if dest.exists() and dest.stat().st_size > 800:
         return True
-    for src in (url + "?w=800&h=800&cp=1", url):
+    for src in (url + "?w=560&h=560&cp=1", url):
         try:
             req = Request(src, headers=UA)
             with urlopen(req, timeout=18) as res:
                 blob = res.read()
-            if len(blob) >= 800:
-                dest.write_bytes(blob)
-                shrink(dest)
+            if len(blob) >= 800 and shrink(dest, blob):
                 return True
         except Exception:
             continue
@@ -142,7 +146,7 @@ def fetch_one(item_id, cache):
     cache[item_id] = urls[:2]
     ok = 0
     for i, url in enumerate(urls[:2], start=2):
-        if download(url, STAGE / f"{item_id}-{i}.jpg"):
+        if download(url, STAGE / f"{item_id}-{i}.webp"):
             ok += 1
     return item_id, f"ok-{ok}" if ok else "dl-fail"
 

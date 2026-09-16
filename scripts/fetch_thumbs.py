@@ -5,11 +5,13 @@ import re
 import time
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from io import BytesIO
 from pathlib import Path
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 import openpyxl
+from PIL import Image
 
 ROOT = Path("/Users/cusky/Desktop/kakobuy")
 XLSX = ROOT / "2026-09-10.xlsx"
@@ -165,16 +167,31 @@ def save_cache(cache):
 
 
 def local_path(item_id):
-    dest = OUT / f"{item_id}.jpg"
+    dest = OUT / f"{item_id}.webp"
     if dest.exists() and dest.stat().st_size > 800:
         return dest
     return None
 
 
+def save_webp(blob, dest, max_side=560, quality=72):
+    im = Image.open(BytesIO(blob))
+    im.load()
+    if im.mode not in ("RGB", "L"):
+        im = im.convert("RGB")
+    elif im.mode == "L":
+        im = im.convert("RGB")
+    if max(im.size) > max_side:
+        im.thumbnail((max_side, max_side), Image.Resampling.LANCZOS)
+    buf = BytesIO()
+    im.save(buf, format="WEBP", quality=quality, method=4)
+    dest.write_bytes(buf.getvalue())
+    return dest
+
+
 def fetch_pic(item_id, cache):
     dest = local_path(item_id)
     if dest:
-        return item_id, "have", f"img/products/{item_id}.jpg"
+        return item_id, "have", f"img/products/{item_id}.webp"
     cached = cache.get(item_id)
     last = "fail"
     pic = cached
@@ -198,15 +215,15 @@ def fetch_pic(item_id, cache):
         return item_id, last, ""
     pic = pic.replace(".jpg.webp", ".jpg")
     try:
-        req = Request(pic + "?w=600&h=600&cp=1", headers=UA)
+        req = Request(pic + "?w=560&h=560&cp=1", headers=UA)
         with urlopen(req, timeout=18) as r:
             blob = r.read()
         if len(blob) >= 800:
-            (OUT / f"{item_id}.jpg").write_bytes(blob)
-            return item_id, "ok", f"img/products/{item_id}.jpg"
+            save_webp(blob, OUT / f"{item_id}.webp")
+            return item_id, "ok", f"img/products/{item_id}.webp"
     except Exception as e:
         last = type(e).__name__
-    return item_id, "remote", pic + "?w=600&h=600&cp=1"
+    return item_id, "remote", pic + "?w=560&h=560&cp=1"
 
 
 def usd(cny):
@@ -226,7 +243,7 @@ def write_catalog(products):
 
 (function () {
   const cover = {};
-  const prefer = { other: "img/products/7770013729.jpg" };
+  const prefer = { other: "img/products/7770013729.webp" };
   KF.products.forEach(function (p) {
     if (!cover[p.category]) cover[p.category] = p.image;
   });
@@ -234,7 +251,7 @@ def write_catalog(products):
     if (prefer[c.slug]) c.image = prefer[c.slug];
     else if (cover[c.slug]) c.image = cover[c.slug];
   });
-  KF.allProductImage = "img/products/7784475023.jpg";
+  KF.allProductImage = "img/products/7784475023.webp";
   if (KF.applyExtraCategories) KF.applyExtraCategories();
 })();
 """,
@@ -288,7 +305,7 @@ def main():
     for it in picked:
         dest = local_path(it["itemId"])
         if dest:
-            images[it["itemId"]] = f"img/products/{it['itemId']}.jpg"
+            images[it["itemId"]] = f"img/products/{it['itemId']}.webp"
         else:
             todo.append(it["itemId"])
     print("have", len(images), "todo", len(todo), flush=True)

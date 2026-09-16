@@ -346,7 +346,7 @@
     const id = itemIdFrom(item);
     if (id) {
       Promise.all([2, 3].map((n) => {
-        const src = `img/products/${id}-${n}.jpg`;
+        const src = `img/products/${id}-${n}.webp`;
         return photoExists(src).then((ok) => (ok ? src : ""));
       })).then((found) => {
         found.filter(Boolean).forEach((src) => gallery.push(src));
