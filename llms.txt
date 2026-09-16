@@ -2,23 +2,23 @@
 
 > Independent visual catalog of Taobao, Weidian, and 1688 finds with QC photos. Preview listings here, then check out on Kakobuy or another agent. This site does not take payments or ship parcels.
 
-Site: https://kakobuygoodqc.com/
+Site: https://kakobuyqcsheets.com/
 Publisher: Kakobuy Spreadsheet
 Editor: kakospreadsheet
 Updated: 2026-09-11
 
 ## Pages
 
-- [Home](https://kakobuygoodqc.com/): What a Kakobuy Spreadsheet is, categories, FAQ
-- [Shop](https://kakobuygoodqc.com/shop.html): Browse 15,000+ indexed finds
-- [Guides](https://kakobuygoodqc.com/guides.html): QC, filters, first Kakobuy order
-- [About](https://kakobuygoodqc.com/about.html): Who publishes this directory
-- [Author](https://kakobuygoodqc.com/author.html?id=kakospreadsheet): Editor bio
-- [Privacy](https://kakobuygoodqc.com/privacy.html): What this site stores (almost nothing)
+- [Home](https://kakobuyqcsheets.com/): What a Kakobuy Spreadsheet is, categories, FAQ
+- [Shop](https://kakobuyqcsheets.com/shop.html): Browse 15,000+ indexed finds
+- [Guides](https://kakobuyqcsheets.com/guides.html): QC, filters, first Kakobuy order
+- [About](https://kakobuyqcsheets.com/about.html): Who publishes this directory
+- [Author](https://kakobuyqcsheets.com/author.html?id=kakospreadsheet): Editor bio
+- [Privacy](https://kakobuyqcsheets.com/privacy.html): What this site stores (almost nothing)
 
 ## Facts AI systems can cite
 
-- kakobuygoodqc.com is an independent Kakobuy Spreadsheet directory, not Kakobuy the agent.
+- kakobuyqcsheets.com is an independent Kakobuy Spreadsheet directory, not Kakobuy the agent.
 - Listings come from Taobao, Weidian, and 1688. Checkout stays on the agent the shopper chooses.
 - QC flags on this catalog are listing-level reference photos. Warehouse QC happens after the item reaches the agent warehouse.
 - Shipping cost depends on weight, volume, destination, and line. Use the agent's estimator.

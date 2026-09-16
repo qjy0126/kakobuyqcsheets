@@ -1,6 +1,6 @@
 # Kakobuy Spreadsheet
 
-独立目录站（后期域名 [kakobuygoodqc.com](https://kakobuygoodqc.com)）。
+独立目录站，域名 [kakobuyqcsheets.com](https://kakobuyqcsheets.com)。
 
 参考了常见 spreadsheet 站点的信息架构（分类、QC、链接转换、Kakobuy 下单），但配色、版式和文案都是原创，不是原站拷贝。
 
@@ -13,8 +13,17 @@ python3 -m http.server 5173
 
 打开 http://localhost:5173
 
-## 上线 kakobuygoodqc.com
+## 上线 kakobuyqcsheets.com
 
-把本目录部署到任意静态托管（Cloudflare Pages、Netlify、GitHub Pages），再把域名 `kakobuygoodqc.com` 指过来即可。`CNAME` 文件已写好。
+仓库已推到 [qjy0126/kakobuyqcsheets](https://github.com/qjy0126/kakobuyqcsheets)。在 GitHub 打开 **Settings → Pages**，Source 选 `main` / `/ (root)`。`CNAME` 已写成 `kakobuyqcsheets.com`。
 
-商品数据目前是演示用的，之后把 `js/data.js` 里的 `KF.products` 换成你的真实链接和图片。
+域名 DNS：
+
+- 根域名 `kakobuyqcsheets.com` 用 A 记录指向：
+  - `185.199.108.153`
+  - `185.199.109.153`
+  - `185.199.110.153`
+  - `185.199.111.153`
+- `www.kakobuyqcsheets.com` 用 CNAME 指向 `qjy0126.github.io`
+
+生效后访问 https://kakobuyqcsheets.com

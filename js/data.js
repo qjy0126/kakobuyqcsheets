@@ -2,8 +2,8 @@ window.KF = window.KF || {};
 
 KF.site = {
   name: "Kakobuy Spreadsheet 2026",
-  domain: "kakobuygoodqc.com",
-  updated: "Sep 11, 2026",
+  domain: "kakobuyqcsheets.com",
+  updated: "Sep 16, 2026",
   sheetUrl: "https://docs.google.com/spreadsheets/d/1ouCVXknU6RYgA1bhcB0g3cPV3yr0a210C4q7IWd1DOc/edit?gid=1593055287#gid=1593055287",
 };
 
@@ -88,13 +88,13 @@ KF.authors = {
   kakospreadsheet: {
     slug: "kakospreadsheet",
     name: "kakospreadsheet",
-    byline: "Editor of Kakobuy Spreadsheet on kakobuygoodqc.com",
+    byline: "Editor of Kakobuy Spreadsheet on kakobuyqcsheets.com",
     bio: "Short notes on browsing this catalog instead of a frozen sheet — QC photos, filters, and how to open a find on Kakobuy.",
   },
 };
 
 KF.posts = [
-  { slug: "catalog-not-cells", author: "kakospreadsheet", title: "A catalog beats a 15k-row sheet on your phone", date: "2026-09-08", excerpt: "Spreadsheets stall. Cards with photos, QC flags, and live links do not.", body: ["Google Sheets is fine as a dump. It is a weak storefront, especially on mobile.", "KakoBuy Spreadsheet on kakobuygoodqc.com keeps the same kind of row — title, price, source, QC — as something you can actually browse.", "Keep a sheet as backup if you want. Shop here."] },
+  { slug: "catalog-not-cells", author: "kakospreadsheet", title: "A catalog beats a 15k-row sheet on your phone", date: "2026-09-08", excerpt: "Spreadsheets stall. Cards with photos, QC flags, and live links do not.", body: ["Google Sheets is fine as a dump. It is a weak storefront, especially on mobile.", "KakoBuy Spreadsheet on kakobuyqcsheets.com keeps the same kind of row — title, price, source, QC — as something you can actually browse.", "Keep a sheet as backup if you want. Shop here."] },
   { slug: "read-qc", author: "kakospreadsheet", title: "How to read warehouse QC before you ship", date: "2026-09-08", excerpt: "QC is a chance to catch glue and sizing issues while the item is still in the warehouse.", body: ["Ask for logos, stitching, and size tags. Wide shots hide the defects that cause returns.", "Compare warehouse photos to the seller listing, not to a campaign image.", "Message the agent before the parcel is sealed."] },
   { slug: "first-order", author: "kakospreadsheet", title: "First Kakobuy order: paste, pay, QC, ship", date: "2026-09-03", excerpt: "This site is a directory. Checkout always happens on Kakobuy.", body: ["Open a find on this catalog, then continue on Kakobuy.", "Pay the agent. The seller ships to the warehouse, not your door.", "Review QC, then submit a parcel. Quotes depend on weight and line."] },
   { slug: "filters", author: "kakospreadsheet", title: "Filters that actually surface better finds", date: "2026-09-03", excerpt: "Category, then QC, then price. Messy titles waste brand searches.", body: ["QC-tagged rows are easier to inspect later, not automatically better.", "Sort by latest when you want live links.", "Re-open the source URL before you order — prices move."] },
@@ -102,7 +102,7 @@ KF.posts = [
 
 KF.faqs = [
   { q: "What is this site?", a: "An independent Kakobuy Spreadsheet: a visual index of Taobao, Weidian, and 1688 finds with QC notes. We do not take payment or ship parcels." },
-  { q: "How does Kakobuy fit in?", a: "Kakobuy is the agent — purchase, warehouse, QC, consolidation, and international shipping. kakobuygoodqc.com only helps you find and open listings." },
+  { q: "How does Kakobuy fit in?", a: "Kakobuy is the agent — purchase, warehouse, QC, consolidation, and international shipping. kakobuyqcsheets.com only helps you find and open listings." },
   { q: "Are QC photos available?", a: "Rows marked QC include reference photos. Warehouse QC from Kakobuy appears after the item arrives at the warehouse." },
   { q: "How much is shipping?", a: "It depends on weight, volume, destination, and line. Use Kakobuy’s estimator after items are in the warehouse." },
   { q: "How long does delivery take?", a: "Many parcels land in 7–20 days after dispatch. Customs and holidays can stretch that." },

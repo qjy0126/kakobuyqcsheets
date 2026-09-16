@@ -19,7 +19,7 @@
             </span>
             <span class="brand-copy">
               <strong>kakobuy <span>spreadsheet</span></strong>
-              <small>www.kakobuygoodqc.com</small>
+              <small>www.kakobuyqcsheets.com</small>
             </span>
           </a>
           <nav class="nav">
@@ -66,7 +66,7 @@
         <div class="wrap footer-grid">
           <div>
             <strong>Kakobuy Spreadsheet</strong>
-            <p class="disclaimer">Independent directory for kakobuygoodqc.com. Not affiliated with Kakobuy, Taobao, Weidian, 1688, or Tmall. We do not process orders or payments.</p>
+            <p class="disclaimer">Independent directory for kakobuyqcsheets.com. Not affiliated with Kakobuy, Taobao, Weidian, 1688, or Tmall. We do not process orders or payments.</p>
           </div>
           <div>
             <p><a href="shop.html">Shop all</a></p>
@@ -77,7 +77,7 @@
             <p><a href="${KF.site.sheetUrl}" target="_blank" rel="noopener">Google Sheet</a></p>
           </div>
           <div>
-            <p>Later domain: <strong>kakobuygoodqc.com</strong></p>
+            <p>Domain: <strong>kakobuyqcsheets.com</strong></p>
             <p>Updated ${KF.site.updated}</p>
           </div>
         </div>

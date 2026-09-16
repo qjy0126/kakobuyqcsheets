@@ -70,7 +70,7 @@ function styleKakobuySheetCover() {
   banner.setVerticalAlignment("middle");
   banner.setHorizontalAlignment("center");
   banner.setValue(
-    "Sheet is slow with thousands of photos? Browse the catalog instead — kakobuygoodqc.com"
+    "Sheet is slow with thousands of photos? Browse the catalog instead — kakobuyqcsheets.com"
   );
 
   const note = sh.getRange("A2:I2");
