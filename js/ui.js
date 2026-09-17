@@ -110,7 +110,7 @@
 
   function productCard(p) {
     return `
-      <a class="product-card" href="item.html?id=${p.id}">
+      <a class="product-card" href="item.html?id=${p.id}" data-id="${p.id}">
         <div class="thumb"><img src="${p.image}" alt="${p.title}" loading="lazy" decoding="async" /></div>
         <h3>${p.title}</h3>
         ${stars(p.rating)}
@@ -272,6 +272,7 @@
     function goSearch(value) {
       const q = (value != null ? value : searchInput.value).trim();
       if (!q) return;
+      KF.track("search", { search_term: q });
       location.href = "shop.html?q=" + encodeURIComponent(q);
     }
 
@@ -295,11 +296,54 @@
       if (e.key === "Enter") {
         e.preventDefault();
         if (activeHit >= 0 && links[activeHit]) {
+          const term = links[activeHit].textContent.replace(/\s+/g, " ").trim();
+          KF.track("search", { search_term: term });
           location.href = links[activeHit].href;
           return;
         }
         goSearch();
       }
+    });
+
+    document.addEventListener("click", (e) => {
+      const suggest = e.target.closest("a.search-suggest");
+      if (suggest) {
+        const term = suggest.textContent.replace(/\s+/g, " ").trim();
+        if (term) KF.track("search", { search_term: term });
+        return;
+      }
+      const card = e.target.closest("a.product-card");
+      if (card) {
+        const id = card.getAttribute("data-id") || "";
+        const item = (KF.products || []).find((p) => String(p.id) === String(id));
+        if (item) {
+          KF.track("select_item", {
+            item_list_name: document.body.dataset.page || "",
+            items: KF.gaItem(item),
+          });
+        }
+        return;
+      }
+      const shopLink = e.target.closest('a[href*="shop.html"]');
+      if (!shopLink) return;
+      let dest;
+      try {
+        dest = new URL(shopLink.getAttribute("href"), location.href);
+      } catch (_) {
+        return;
+      }
+      if (!/shop\.html$/i.test(dest.pathname)) return;
+      const cat = dest.searchParams.get("cat") || "";
+      const q = dest.searchParams.get("q") || "";
+      const sort = dest.searchParams.get("sort") || "";
+      const qc = dest.searchParams.get("qc") || "";
+      if (q) {
+        KF.track("search", { search_term: q });
+        return;
+      }
+      if (cat) KF.track("filter", { filter_type: "category", filter_value: cat });
+      if (sort && sort !== "latest") KF.track("filter", { filter_type: "sort", filter_value: sort });
+      if (qc === "1") KF.track("filter", { filter_type: "qc", filter_value: "1" });
     });
   }
 

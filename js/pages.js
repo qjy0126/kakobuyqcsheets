@@ -96,6 +96,7 @@
       if (s !== "latest") next.searchParams.set("sort", s);
       if (q) next.searchParams.set("q", params.get("q"));
       if (qcOnly) next.searchParams.set("qc", "1");
+      KF.track("filter", { filter_type: "sort", filter_value: s || "latest" });
       location.href = next.pathname + next.search;
     }
     $("#sort").addEventListener("change", apply);
@@ -221,9 +222,32 @@
     $("#item-main").alt = item.title;
     $("#buy-link").href = KF.kakobuyUrl(item.sourceUrl);
     $("#sheet-link").href = KF.site.sheetUrl;
+    KF.track("view_item", {
+      currency: "USD",
+      value: Number(item.price) || 0,
+      items: KF.gaItem(item),
+    });
+    const trackBuyKakobuy = () => {
+      KF.track("buy_kakobuy", {
+        agent: "kakobuy",
+        item_id: String(item.id),
+        item_name: item.title || "",
+        currency: "USD",
+        value: Number(item.price) || 0,
+        items: KF.gaItem(item),
+      });
+    };
+    $("#buy-link").addEventListener("click", trackBuyKakobuy);
+    const buyGrid = $("#buy-grid");
+    if (buyGrid) {
+      buyGrid.addEventListener("click", (e) => {
+        const pick = e.target.closest(".buy-pick");
+        if (pick && pick.getAttribute("data-agent") === "kakobuy") trackBuyKakobuy();
+      });
+    }
     const agents = KF.agents || [];
     fill("buy-grid", agents.map((agent) => `
-      <a class="buy-pick" href="${KF.agentUrl(agent.id, item.sourceUrl)}" target="_blank" rel="noopener">
+      <a class="buy-pick" data-agent="${agent.id}" href="${KF.agentUrl(agent.id, item.sourceUrl)}" target="_blank" rel="noopener">
         <span class="buy-mark"><img src="${agent.logo}" alt=""></span>
         <span class="buy-pick-copy">
           <b>${agent.name}</b>

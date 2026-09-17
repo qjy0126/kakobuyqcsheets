@@ -148,6 +148,24 @@ KF.agents = [
   { id: "hipobuy", name: "HipoBuy", logo: "img/buy/hipobuy.png" },
 ];
 KF.kakobuyUrl = (sourceUrl) => KF.agentUrl("kakobuy", sourceUrl);
+
+KF.gaItem = (p) => {
+  if (!p) return [];
+  return [{
+    item_id: String(p.id),
+    item_name: p.title || "",
+    item_category: p.category || "",
+    price: Number(p.price) || 0,
+    quantity: 1,
+  }];
+};
+
+KF.track = (name, params) => {
+  try {
+    if (typeof gtag !== "function") return;
+    gtag("event", name, Object.assign({ transport_type: "beacon" }, params || {}));
+  } catch (_) {}
+};
 KF.extractUrl = (text) => {
   const m = String(text).match(/https?:\/\/[^\s"'<>]+/i);
   return m ? m[0].replace(/[.,;]+$/, "") : "";
