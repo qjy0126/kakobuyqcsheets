@@ -42,6 +42,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Montserrat:ital,wght@0,700;0,800;1,700;1,800&family=Nunito:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Google tag (gtag.js) Firebase Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-48MV974LBV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-48MV974LBV');
+  </script>
 </head>
 <body data-page="home">
   <main>
@@ -155,11 +163,11 @@
           <table class="status-table">
             <thead><tr><th>Category</th><th>Main products</th><th>Latest update</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>Sneakers &amp; footwear</td><td>Court shoes, runners, trail pairs, and seasonal sneakers</td><td>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
-              <tr><td>Streetwear</td><td>Hoodies, jackets, tees, denim, and matching sets</td><td>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
-              <tr><td>Bags &amp; extras</td><td>Slings, caps, belts, eyewear, and small goods</td><td>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
-              <tr><td>Sports jerseys</td><td>Football shirts, basketball kits, and retro edits</td><td>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
-              <tr><td>Tech &amp; lifestyle</td><td>Desk gear, bricks, and odd finds that do not fit a rack</td><td>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
+              <tr><td>Sneakers &amp; footwear</td><td>Court shoes, runners, trail pairs, and seasonal sneakers</td><td data-fresh-month>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
+              <tr><td>Streetwear</td><td>Hoodies, jackets, tees, denim, and matching sets</td><td data-fresh-month>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
+              <tr><td>Bags &amp; extras</td><td>Slings, caps, belts, eyewear, and small goods</td><td data-fresh-month>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
+              <tr><td>Sports jerseys</td><td>Football shirts, basketball kits, and retro edits</td><td data-fresh-month>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
+              <tr><td>Tech &amp; lifestyle</td><td>Desk gear, bricks, and odd finds that do not fit a rack</td><td data-fresh-month>Sep 2026</td><td><span class="pill">Updated</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -201,9 +209,9 @@
       </div>
     </noscript>
   </main>
-  <script src="js/data.js?v=7"></script>
+  <script src="js/data.js?v=8"></script>
   <script src="js/catalog.js?v=7"></script>
   <script src="js/ui.js"></script>
-  <script src="js/pages.js"></script>
+  <script src="js/pages.js?v=8"></script>
 </body>
 </html>
