@@ -441,15 +441,19 @@ def main() -> None:
     product_urls = [(abs_url(f"/item/{slug}/"), TODAY, "weekly") for slug in slugs.values()]
     write(ROOT / "sitemap-pages.xml", sitemap_xml(page_urls))
 
-    chunk_size = 400
-    product_sitemaps = []
+    chunk_size = 200
+    sm_dir = ROOT / "sitemaps"
+    if sm_dir.exists():
+        shutil.rmtree(sm_dir)
+    sm_dir.mkdir()
     for old in ROOT.glob("sitemap-products*.xml"):
         old.unlink()
+    product_sitemaps = []
     for i in range(0, len(product_urls), chunk_size):
         n = i // chunk_size + 1
-        name = f"sitemap-products-{n}.xml"
-        write(ROOT / name, sitemap_xml(product_urls[i : i + chunk_size]))
-        product_sitemaps.append(name)
+        name = f"{n:02d}.xml"
+        write(sm_dir / name, sitemap_xml(product_urls[i : i + chunk_size]))
+        product_sitemaps.append("sitemaps/" + name)
 
     index_body = "\n".join(
         f"  <sitemap><loc>{abs_url('/' + name)}</loc><lastmod>{TODAY}</lastmod></sitemap>"
