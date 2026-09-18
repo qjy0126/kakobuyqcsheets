@@ -440,28 +440,32 @@ def main() -> None:
     page_urls += [(abs_url(f"/brands/{slugify(name)}/"), TODAY, "weekly") for name, _ in brand_names]
     product_urls = [(abs_url(f"/item/{slug}/"), TODAY, "weekly") for slug in slugs.values()]
     write(ROOT / "sitemap-pages.xml", sitemap_xml(page_urls))
-    write(ROOT / "sitemap-products.xml", sitemap_xml(product_urls))
-    write(
-        ROOT / "sitemap-index.xml",
-        """<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap><loc>"""
-        + abs_url("/sitemap-pages.xml")
-        + """</loc><lastmod>"""
-        + TODAY
-        + """</lastmod></sitemap>
-  <sitemap><loc>"""
-        + abs_url("/sitemap-products.xml")
-        + """</loc><lastmod>"""
-        + TODAY
-        + """</lastmod></sitemap>
-</sitemapindex>
-""",
+
+    chunk_size = 400
+    product_sitemaps = []
+    for old in ROOT.glob("sitemap-products*.xml"):
+        old.unlink()
+    for i in range(0, len(product_urls), chunk_size):
+        n = i // chunk_size + 1
+        name = f"sitemap-products-{n}.xml"
+        write(ROOT / name, sitemap_xml(product_urls[i : i + chunk_size]))
+        product_sitemaps.append(name)
+
+    index_body = "\n".join(
+        f"  <sitemap><loc>{abs_url('/' + name)}</loc><lastmod>{TODAY}</lastmod></sitemap>"
+        for name in ["sitemap-pages.xml", *product_sitemaps]
     )
-    shutil.copyfile(ROOT / "sitemap-index.xml", ROOT / "sitemap.xml")
+    index_xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + index_body
+        + "\n</sitemapindex>\n"
+    )
+    write(ROOT / "sitemap-index.xml", index_xml)
+    write(ROOT / "sitemap.xml", index_xml)
     print(
         f"wrote {len(products)} item pages, {len(CAT_LABELS)} categories, "
-        f"{len(brand_names)} brands, {len(product_urls)} product sitemap URLs"
+        f"{len(brand_names)} brands, {len(product_urls)} product URLs in {len(product_sitemaps)} sitemaps"
     )
 
 
