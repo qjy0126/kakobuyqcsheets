@@ -3,9 +3,35 @@ window.KF = window.KF || {};
 KF.site = {
   name: "Kakobuy Spreadsheet 2026",
   domain: "kakobuyqcsheets.com",
+  origin: "https://kakobuyqcsheets.com",
   updated: "Sep 16, 2026",
   sheetUrl: "https://docs.google.com/spreadsheets/d/1ouCVXknU6RYgA1bhcB0g3cPV3yr0a210C4q7IWd1DOc/edit?gid=1593055287#gid=1593055287",
 };
+
+KF.asset = (path) => {
+  const s = String(path || "");
+  if (!s || /^https?:\/\//i.test(s) || s.startsWith("/")) return s;
+  return "/" + s.replace(/^\.\//, "");
+};
+
+KF.slugify = (text) => String(text || "")
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-+|-+$/g, "")
+  .replace(/-+/g, "-")
+  .slice(0, 60);
+
+KF.itemSlug = (p) => {
+  const id = String((p && p.id) || "").replace(/^p-/, "");
+  const base = KF.slugify(p && p.title);
+  return (base ? base + "-" : "") + id;
+};
+
+KF.itemPath = (p) => "/item/" + KF.itemSlug(p) + "/";
+KF.catPath = (slug) => (slug ? "/" + slug + "/" : "/finds/");
+KF.brandSlug = (name) => KF.slugify(name);
+KF.brandPath = (name) => "/brands/" + KF.brandSlug(name) + "/";
+KF.findsPath = () => "/finds/";
 
 KF.nav = {
   apparel: [

@@ -9,14 +9,14 @@
 
   function renderHome() {
     fill("cat-grid", KF.categories.map((c) => `
-      <a class="cat-card" href="shop.html?cat=${c.slug}">
-        <span class="cat-thumb"><img src="${c.image}" alt="" loading="lazy" decoding="async"></span>
+      <a class="cat-card" href="${KF.catPath(c.slug)}">
+        <span class="cat-thumb"><img src="${KF.asset(c.image)}" alt="" loading="lazy" decoding="async"></span>
         <span class="cat-name">${c.label}</span>
       </a>
     `).join("") + `
-      <a class="cat-card cat-card--all" href="shop.html">
+      <a class="cat-card cat-card--all" href="${KF.findsPath()}">
         <span class="cat-thumb">
-          <img src="${KF.allProductImage}" alt="" loading="lazy" decoding="async">
+          <img src="${KF.asset(KF.allProductImage)}" alt="" loading="lazy" decoding="async">
           <em>ALL PRODUCT CATEGORIES</em>
         </span>
         <span class="cat-name">ALL PRODUCT</span>
@@ -33,8 +33,7 @@
   function pagerHtml(page, pages, cat, q, sort, qc) {
     if (pages <= 1) return "";
     function href(n) {
-      const next = new URL("shop.html", location.href);
-      if (cat) next.searchParams.set("cat", cat);
+      const next = new URL(location.pathname.replace(/index\.html$/i, "") || "/", location.href);
       if (q) next.searchParams.set("q", params.get("q"));
       if (sort && sort !== "latest") next.searchParams.set("sort", sort);
       if (qc === "1") next.searchParams.set("qc", "1");
@@ -57,7 +56,8 @@
   }
 
   function renderShop() {
-    const cat = params.get("cat") || "";
+    const cat = document.body.dataset.cat || params.get("cat") || "";
+    const brandSlug = document.body.dataset.brand || params.get("brand") || "";
     const q = (params.get("q") || "").toLowerCase();
     const qcOnly = params.get("qc") === "1";
     const sort = params.get("sort") || "latest";
@@ -65,18 +65,24 @@
     const page = Math.max(1, parseInt(params.get("page") || "1", 10) || 1);
     let list = KF.products.slice();
     if (cat) list = list.filter((p) => KF.inCategory(p, cat));
+    if (brandSlug) list = list.filter((p) => KF.brandSlug(p.collection) === brandSlug);
     if (q) list = list.filter((p) => `${p.title} ${p.collection} ${KF.productCats(p).join(" ")}`.toLowerCase().includes(q));
     if (qcOnly) list = list.filter((p) => p.qc);
     if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
     if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
     if (sort === "rating" || sort === "popular") list.sort((a, b) => b.rating - a.rating);
+    const brandName = brandSlug
+      ? (list[0] && list[0].collection) || brandSlug
+      : "";
     const title = (
       KF.categories.find((c) => c.slug === cat) ||
       KF.nav.apparel.find((c) => c.slug === cat) ||
       KF.nav.lifestyle.find((c) => c.slug === cat) ||
       {}
-    ).label || (q ? `Search: ${params.get("q")}` : "Shop all");
-    document.title = `${title} — Kakobuy Spreadsheet 2026`;
+    ).label || brandName || (q ? `Search: ${params.get("q")}` : "Shop all");
+    if (!document.querySelector(".catalog-intro h1")) {
+      document.title = `${title} — Kakobuy Spreadsheet 2026`;
+    }
     const total = list.length;
     const pages = Math.max(1, Math.ceil(total / pageSize));
     const safePage = Math.min(page, pages);
@@ -87,11 +93,8 @@
     fill("shop-count", total ? `Showing ${from}–${to} of ${total} results` : "No products found");
     fill("product-grid", slice.map(KF.ui.productCard).join("") || "<p>No finds in this filter.</p>");
     fill("pager", pagerHtml(safePage, pages, cat, q, sort, params.get("qc")));
-    const sortBox = $("#sort");
-    if (sortBox) sortBox.value = sort === "latest" ? "latest" : sort;
     function apply() {
-      const next = new URL("shop.html", location.href);
-      if (cat) next.searchParams.set("cat", cat);
+      const next = new URL(location.pathname.replace(/index\.html$/i, "") || "/", location.href);
       const s = $("#sort").value;
       if (s !== "latest") next.searchParams.set("sort", s);
       if (q) next.searchParams.set("q", params.get("q"));
@@ -99,7 +102,11 @@
       KF.track("filter", { filter_type: "sort", filter_value: s || "latest" });
       location.href = next.pathname + next.search;
     }
-    $("#sort").addEventListener("change", apply);
+    const sortBox = $("#sort");
+    if (sortBox) {
+      sortBox.value = sort === "latest" ? "latest" : sort;
+      sortBox.addEventListener("change", apply);
+    }
   }
 
   function catLabel(slug) {
@@ -199,12 +206,17 @@
   }
 
   function renderItem() {
-    const item = KF.products.find((p) => p.id === params.get("id")) || KF.products[0];
+    const wanted = document.body.dataset.itemId || params.get("id");
+    const item = KF.products.find((p) => p.id === wanted);
+    if (!item) {
+      location.replace(KF.findsPath());
+      return;
+    }
     const related = KF.products.filter((p) => p.category === item.category);
     const idx = Math.max(0, related.findIndex((p) => p.id === item.id));
     const prev = related[(idx - 1 + related.length) % related.length];
     const next = related[(idx + 1) % related.length];
-    const local = item.image || ((item.gallery && item.gallery[0]) || "");
+    const local = KF.asset(item.image || ((item.gallery && item.gallery[0]) || ""));
     const gallery = [local];
     let photo = 0;
 
@@ -239,15 +251,15 @@
     };
     $("#buy-link").addEventListener("click", trackBuyKakobuy);
     fill("crumbs", `
-      <a href="index.html">Home</a><span>/</span>
-      <a href="shop.html">Shop</a><span>/</span>
-      <a href="shop.html?cat=${item.category}">${catLabel(item.category)}</a><span>/</span>
+      <a href="/">Home</a><span>/</span>
+      <a href="${KF.findsPath()}">Shop</a><span>/</span>
+      <a href="${KF.catPath(item.category)}">${catLabel(item.category)}</a><span>/</span>
       <span>${item.title}</span>
     `);
     if (related.length > 1) {
       fill("item-switch", `
-        <a href="item.html?id=${prev.id}">‹ Previous</a>
-        <a href="item.html?id=${next.id}">Next ›</a>
+        <a href="${KF.itemPath(prev)}">‹ Previous</a>
+        <a href="${KF.itemPath(next)}">Next ›</a>
       `);
     }
     fill("related-grid", related.filter((p) => p.id !== item.id).slice(0, 6).map(KF.ui.productCard).join(""));
@@ -332,7 +344,7 @@
     const id = itemIdFrom(item);
     if (id) {
       Promise.all([2, 3].map((n) => {
-        const src = `img/products/${id}-${n}.webp`;
+        const src = `/img/products/${id}-${n}.webp`;
         return photoExists(src).then((ok) => (ok ? src : ""));
       })).then((found) => {
         found.filter(Boolean).forEach((src) => gallery.push(src));
@@ -351,12 +363,12 @@
     const author = authorOf(p);
     return `
       <article class="card post-card">
-        <a href="guide.html?slug=${p.slug}">
+        <a href="/guide.html?slug=${p.slug}">
           <small>${p.date}</small>
           <h3>${p.title}</h3>
           <p>${p.excerpt}</p>
         </a>
-        <a class="post-by" href="author.html?id=${author.slug}">by: ${author.name}</a>
+        <a class="post-by" href="/author.html?id=${author.slug}">by: ${author.name}</a>
       </article>
     `;
   }
@@ -371,7 +383,7 @@
     $("#guide-title").textContent = post.title;
     $("#guide-date").textContent = post.date;
     const by = $("#guide-by");
-    if (by) by.innerHTML = `<a href="author.html?id=${author.slug}">by: ${author.name}</a>`;
+    if (by) by.innerHTML = `<a href="/author.html?id=${author.slug}">by: ${author.name}</a>`;
     fill("guide-body", post.body.map((p) => `<p>${p}</p>`).join(""));
     document.title = `${post.title} — Kakobuy Spreadsheet 2026`;
   }
@@ -386,6 +398,64 @@
     fill("post-grid", posts.map(postCard).join("") || "<p>No guides yet.</p>");
   }
 
+  function knownCats() {
+    return new Set([
+      ...KF.categories.map((c) => c.slug),
+      ...KF.nav.apparel.map((c) => c.slug),
+      ...KF.nav.lifestyle.map((c) => c.slug),
+    ]);
+  }
+
+  function redirectLegacy() {
+    const path = location.pathname;
+    const cats = knownCats();
+    if (/\/item\.html$/i.test(path)) {
+      const id = params.get("id");
+      const item = id && KF.products.find((p) => p.id === id);
+      location.replace(item ? KF.itemPath(item) : KF.findsPath());
+      return true;
+    }
+    if (/\/shop\.html$/i.test(path)) {
+      const cat = params.get("cat");
+      const next = new URLSearchParams(params);
+      next.delete("cat");
+      const dest = cat && cats.has(cat) ? KF.catPath(cat) : KF.findsPath();
+      const qs = next.toString();
+      location.replace(dest + (qs ? "?" + qs : ""));
+      return true;
+    }
+    if ((path === "/finds/" || path === "/finds") && params.get("cat")) {
+      const cat = params.get("cat");
+      if (!cats.has(cat)) return false;
+      const next = new URLSearchParams(params);
+      next.delete("cat");
+      const qs = next.toString();
+      location.replace(KF.catPath(cat) + (qs ? "?" + qs : ""));
+      return true;
+    }
+    return false;
+  }
+
+  function renderBrands() {
+    const skip = /^(find)?$/i;
+    const counts = {};
+    KF.products.forEach((p) => {
+      const name = String(p.collection || "").trim();
+      if (!name || skip.test(name)) return;
+      counts[name] = (counts[name] || 0) + 1;
+    });
+    const rows = Object.entries(counts)
+      .filter(([, n]) => n >= 5)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    fill("brand-grid", rows.map(([name, n]) => `
+      <a class="cat-card" href="${KF.brandPath(name)}">
+        <span class="cat-name">${name}</span>
+        <small>${n} finds</small>
+      </a>
+    `).join(""));
+  }
+
+  if (redirectLegacy()) return;
   const page = document.body.dataset.page;
   KF.ui.bindChrome();
   if (page === "home") renderHome();
@@ -394,4 +464,5 @@
   if (page === "guides") renderGuides();
   if (page === "guide") renderGuide();
   if (page === "author") renderAuthor();
+  if (page === "brands") renderBrands();
 })();

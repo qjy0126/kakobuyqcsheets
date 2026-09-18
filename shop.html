@@ -3,47 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Shop all — Kakobuy Spreadsheet 2026</title>
-  <meta name="description" content="Browse the Kakobuy Spreadsheet catalog: shoes, streetwear, jerseys, and QC-flagged finds from Taobao, Weidian, and 1688." />
-  <meta name="keywords" content="Kakobuy Spreadsheet, Kakobuy shop, QC photos, Weidian, Taobao, 1688, Kakobuy finds" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://kakobuyqcsheets.com/shop.html" />
-  <meta property="og:title" content="Shop all — Kakobuy Spreadsheet 2026" />
-  <meta property="og:description" content="Browse the Kakobuy Spreadsheet catalog: shoes, streetwear, jerseys, and QC-flagged finds from Taobao, Weidian, and 1688." />
-  <meta property="og:url" content="https://kakobuyqcsheets.com/shop.html" />
-  <meta property="og:image" content="https://kakobuyqcsheets.com/img/logo.png" />
-  <link rel="icon" href="img/favicon.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Montserrat:ital,wght@0,700;0,800;1,700;1,800&family=Nunito:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Google tag (gtag.js) Firebase Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-48MV974LBV"></script>
+  <meta name="robots" content="noindex, follow" />
+  <title>Redirecting…</title>
+  <link rel="canonical" href="https://kakobuyqcsheets.com/finds/" />
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-48MV974LBV');
+    (function () {
+      var cats = {"shoes":1,"t-shirts":1,"hoodies":1,"jackets":1,"pants":1,"sets":1,"jersey":1,"underwear":1,"headwear":1,"glasses":1,"watches":1,"perfume":1,"accessories":1,"bricks":1,"other":1};
+      var p = new URLSearchParams(location.search);
+      var cat = p.get("cat") || "";
+      p.delete("cat");
+      var dest = cats[cat] ? "/" + cat + "/" : "/finds/";
+      var qs = p.toString();
+      location.replace(dest + (qs ? "?" + qs : ""));
+    })();
   </script>
 </head>
-<body data-page="shop">
-  <main class="wrap catalog">
-    <div class="catalog-top">
-      <p id="shop-count">Showing 0 results</p>
-      <select id="sort">
-        <option value="latest">Default sorting</option>
-        <option value="popular">Sort by popularity</option>
-        <option value="rating">Sort by average rating</option>
-        <option value="price-asc">Sort by price: low to high</option>
-        <option value="price-desc">Sort by price: high to low</option>
-      </select>
-    </div>
-    <div class="product-grid" id="product-grid"></div>
-    <nav class="pager" id="pager"></nav>
-  </main>
-  <script src="js/data.js?v=10"></script>
-  <script src="js/catalog.js?v=7"></script>
-  <script src="js/ui.js?v=9"></script>
-  <script src="js/pages.js?v=10"></script>
+<body>
+  <p>This catalog moved. <a href="/finds/">Continue to all finds</a>.</p>
 </body>
 </html>

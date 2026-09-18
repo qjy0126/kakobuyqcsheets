@@ -3,125 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Find — Kakobuy Spreadsheet 2026</title>
-  <meta name="description" content="Preview this Kakobuy Spreadsheet find with QC photos, then open Kakobuy to check out." />
-  <meta name="keywords" content="Kakobuy Spreadsheet, QC photos, Weidian, Taobao, 1688, Kakobuy, oopBuy, MuleBuy" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://kakobuyqcsheets.com/item.html" />
-  <meta property="og:title" content="Find — Kakobuy Spreadsheet 2026" />
-  <meta property="og:url" content="https://kakobuyqcsheets.com/item.html" />
-  <meta property="og:image" content="https://kakobuyqcsheets.com/img/logo.png" />
-  <link rel="icon" href="img/favicon.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Montserrat:ital,wght@0,700;0,800;1,700;1,800&family=Nunito:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=6" />
-  <!-- Google tag (gtag.js) Firebase Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-48MV974LBV"></script>
+  <meta name="robots" content="noindex, follow" />
+  <title>Redirecting…</title>
+  <link rel="canonical" href="https://kakobuyqcsheets.com/finds/" />
+  <script src="/js/slugs.js?v=1"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-48MV974LBV');
+    (function () {
+      var id = new URLSearchParams(location.search).get("id");
+      var slug = id && window.KF_SLUGS && KF_SLUGS[id];
+      location.replace(slug ? "/item/" + slug + "/" : "/finds/");
+    })();
   </script>
 </head>
-<body data-page="item">
-  <main class="wrap item-page">
-    <div class="item-bar">
-      <nav class="crumbs" id="crumbs"></nav>
-      <div class="item-switch" id="item-switch"></div>
-    </div>
-    <div class="item-layout">
-      <div class="gallery">
-        <div class="thumbs" id="thumbs"></div>
-        <div class="main-stage">
-          <button type="button" class="gal-arrow gal-prev" id="gal-prev" aria-label="Previous photo">‹</button>
-          <div class="main" id="item-stage">
-            <img id="item-main" alt="" />
-          </div>
-          <button type="button" class="gal-arrow gal-next" id="gal-next" aria-label="Next photo">›</button>
-          <button type="button" class="gal-zoom" id="gal-zoom" aria-label="Zoom photo">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      <div class="item-info">
-        <h1 id="item-title"></h1>
-        <div class="price" id="item-price"></div>
-        <p class="item-rating" id="item-rating"></p>
-        <a class="btn btn-buy" id="buy-link" target="_blank" rel="noopener">Buy on Kakobuy</a>
-        <aside class="item-sheet">
-          <span class="item-sheet-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path fill="#34a853" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-              <path fill="#fff" d="M14 2v6h6"/>
-              <path fill="#188038" d="M7 12h10v8H7z"/>
-              <path fill="#fff" d="M8 13h3v2H8zm0 3h3v2H8zm4-3h4v2h-4zm0 3h4v2h-4z"/>
-            </svg>
-          </span>
-          <div>
-            <strong>Live Google Sheet</strong>
-            <p>Prefer the classic row view? Open the spreadsheet this catalog is indexed from.</p>
-            <a class="sheet-chip" id="sheet-link" target="_blank" rel="noopener">Kakobuy Spreadsheet</a>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </main>
-  <div class="zoom-layer" id="zoom-layer">
-    <button type="button" class="zoom-close" id="zoom-close" aria-label="Close zoom">×</button>
-    <img id="zoom-img" alt="" />
-  </div>
-  <section class="section">
-    <div class="wrap">
-      <h2>More in this category</h2>
-      <div class="product-grid" id="related-grid" style="margin-top:16px"></div>
-    </div>
-  </section>
-  <section class="section reviews" id="reviews">
-    <div class="wrap">
-      <h2>Customer Review · <span id="review-count">0</span></h2>
-      <div class="review-list" id="review-list"></div>
-      <div class="review-actions">
-        <a class="btn review-comment-btn" href="#review-form">Comment</a>
-      </div>
-      <form class="review-form" id="review-form">
-        <label>
-          <span>Your review <em>*</em></span>
-          <textarea name="text" required rows="6"></textarea>
-        </label>
-        <label>
-          <span>Name</span>
-          <input name="name" required autocomplete="name" />
-        </label>
-        <label>
-          <span>Email</span>
-          <input name="email" type="email" required autocomplete="email" />
-        </label>
-        <button class="btn btn-solid" type="submit">Post comment</button>
-      </form>
-    </div>
-  </section>
-  <section class="section">
-    <div class="wrap">
-      <aside class="trust-note">
-        <div class="trust-note-top">
-          <h3>Why check a find here before you buy?</h3>
-          <span class="trust-note-badge">Directory · www.kakobuyqcsheets.com</span>
-        </div>
-        <p>A 15,000-row sheet freezes when you need a photo. This catalog is a visual index for Kakobuy shoppers: look at QC on <strong id="trust-title">this find</strong>, then open Kakobuy to place the order. Checkout stays on the agent — this site does not take payments or keep your haul data.</p>
-        <div class="trust-note-box">
-          <p><strong>Search hint.</strong> One word works better than a sentence — try a brand or a category like <em>shoes</em>.</p>
-          <p>This listing is marked at <strong id="trust-price">$0.00</strong>. Use <strong>Buy on Kakobuy</strong> above to open the listing on Kakobuy.</p>
-        </div>
-      </aside>
-    </div>
-  </section>
-  <script src="js/data.js?v=10"></script>
-  <script src="js/catalog.js?v=7"></script>
-  <script src="js/ui.js?v=9"></script>
-  <script src="js/pages.js?v=10"></script>
+<body>
+  <p>This find moved. <a href="/finds/">Browse the catalog</a>.</p>
 </body>
 </html>

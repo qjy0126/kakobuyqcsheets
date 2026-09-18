@@ -5,7 +5,7 @@
   const setSaved = (ids) => localStorage.setItem(savedKey, JSON.stringify(ids));
 
   function dropList(items) {
-    return items.map((c) => `<a href="shop.html?cat=${c.slug}">${c.label}</a>`).join("");
+    return items.map((c) => `<a href="${KF.catPath(c.slug)}">${c.label}</a>`).join("");
   }
 
   function header() {
@@ -13,9 +13,9 @@
       <header class="site-header">
         <div class="wrap header-row">
           <button class="menu-btn" data-open="nav" aria-label="Menu">☰</button>
-          <a class="brand" href="index.html">
+          <a class="brand" href="/">
             <span class="brand-mark">
-              <img src="img/logo-k.png" alt="Kakobuy Spreadsheet" />
+              <img src="${KF.asset("img/logo-k.png")}" alt="Kakobuy Spreadsheet" />
             </span>
             <span class="brand-copy">
               <strong>kakobuy <span>spreadsheet</span></strong>
@@ -23,8 +23,8 @@
             </span>
           </a>
           <nav class="nav">
-            <a href="index.html" data-nav="home">Home</a>
-            <a href="shop.html" data-nav="shop">Shop All</a>
+            <a href="/" data-nav="home">Home</a>
+            <a href="${KF.findsPath()}" data-nav="shop">Shop All</a>
             <div class="drop" data-nav="apparel">
               <button class="linkish" type="button" aria-haspopup="true">Apparel</button>
               <div class="drop-panel">${dropList(KF.nav.apparel)}</div>
@@ -33,7 +33,7 @@
               <button class="linkish" type="button" aria-haspopup="true">Lifestyle</button>
               <div class="drop-panel">${dropList(KF.nav.lifestyle)}</div>
             </div>
-            <a href="guides.html" data-nav="guides">Guides</a>
+            <a href="/guides.html" data-nav="guides">Guides</a>
           </nav>
           <div class="header-tools">
             <button class="icon-btn search-btn" data-open="search" aria-label="Search">
@@ -47,10 +47,10 @@
       </header>
       <div class="overlay" id="overlay"></div>
       <aside class="mobile-nav" id="mobile-nav">
-        <a href="index.html" data-nav="home">Home</a>
-        <a href="shop.html" data-nav="shop">Shop All</a>
-        ${[...KF.nav.apparel, ...KF.nav.lifestyle].map((c) => `<a href="shop.html?cat=${c.slug}">${c.label}</a>`).join("")}
-        <a href="guides.html" data-nav="guides">Guides</a>
+        <a href="/" data-nav="home">Home</a>
+        <a href="${KF.findsPath()}" data-nav="shop">Shop All</a>
+        ${[...KF.nav.apparel, ...KF.nav.lifestyle].map((c) => `<a href="${KF.catPath(c.slug)}">${c.label}</a>`).join("")}
+        <a href="/guides.html" data-nav="guides">Guides</a>
       </aside>
       <div class="search-modal" id="search-modal">
         <input class="search-input" id="global-search" placeholder="Search finds, categories, QC…" />
@@ -66,29 +66,30 @@
         <div class="wrap">
           <div class="footer-grid">
             <div class="footer-col">
-              <a class="footer-brand" href="index.html">Kakobuy Spreadsheet</a>
+              <a class="footer-brand" href="/">Kakobuy Spreadsheet</a>
               <p>Independent Kakobuy Spreadsheet with QC photos and listing links. We do not process orders or payments. Not officially affiliated with Kakobuy.</p>
             </div>
             <div class="footer-col">
               <h3>Products</h3>
-              <a href="shop.html?cat=shoes">Kakobuy Shoes</a>
-              <a href="shop.html?cat=hoodies">Kakobuy Hoodies</a>
-              <a href="shop.html?cat=t-shirts">Kakobuy Tees</a>
-              <a href="shop.html?cat=jackets">Kakobuy Jackets</a>
-              <a href="shop.html">Shop all</a>
+              <a href="${KF.catPath("shoes")}">Kakobuy Shoes</a>
+              <a href="${KF.catPath("hoodies")}">Kakobuy Hoodies</a>
+              <a href="${KF.catPath("t-shirts")}">Kakobuy Tees</a>
+              <a href="${KF.catPath("jackets")}">Kakobuy Jackets</a>
+              <a href="${KF.findsPath()}">Shop all</a>
+              <a href="/brands/">Brands</a>
             </div>
             <div class="footer-col">
               <h3>Guides</h3>
-              <a href="guides.html">How to shop this catalog</a>
-              <a href="guide.html?slug=read-qc">QC photos</a>
-              <a href="guide.html?slug=first-order">First Kakobuy order</a>
-              <a href="guides.html">All guides</a>
+              <a href="/guides.html">How to shop this catalog</a>
+              <a href="/guide.html?slug=read-qc">QC photos</a>
+              <a href="/guide.html?slug=first-order">First Kakobuy order</a>
+              <a href="/guides.html">All guides</a>
             </div>
             <div class="footer-col">
               <h3>Quick Links</h3>
-              <a href="privacy.html">Privacy Policy</a>
-              <a href="terms.html">Terms &amp; Disclaimer</a>
-              <a href="about.html">About</a>
+              <a href="/privacy.html">Privacy Policy</a>
+              <a href="/terms.html">Terms &amp; Disclaimer</a>
+              <a href="/about.html">About</a>
             </div>
           </div>
         </div>
@@ -110,8 +111,8 @@
 
   function productCard(p) {
     return `
-      <a class="product-card" href="item.html?id=${p.id}" data-id="${p.id}">
-        <div class="thumb"><img src="${p.image}" alt="${p.title}" loading="lazy" decoding="async" /></div>
+      <a class="product-card" href="${KF.itemPath(p)}" data-id="${p.id}">
+        <div class="thumb"><img src="${KF.asset(p.image)}" alt="${p.title}" loading="lazy" decoding="async" /></div>
         <h3>${p.title}</h3>
         ${stars(p.rating)}
         <b>${KF.money(p.price)}</b>
@@ -134,7 +135,7 @@
     if (!list) return;
     const items = KF.products.filter((p) => ids.includes(p.id));
     list.innerHTML = items.length
-      ? items.map((p) => `<p><a href="item.html?id=${p.id}">${p.title}</a> · ${KF.money(p.price)}</p>`).join("")
+      ? items.map((p) => `<p><a href="${KF.itemPath(p)}">${p.title}</a> · ${KF.money(p.price)}</p>`).join("")
       : "<p>No saved finds yet.</p>";
   }
 
@@ -156,14 +157,14 @@
 
   function currentNav() {
     const page = document.body.dataset.page || "";
-    const cat = new URLSearchParams(location.search).get("cat") || "";
+    const cat = document.body.dataset.cat || new URLSearchParams(location.search).get("cat") || "";
     const apparel = new Set(KF.nav.apparel.map((c) => c.slug));
     const lifestyle = new Set(KF.nav.lifestyle.map((c) => c.slug));
     if (page === "home") return "home";
     if (page === "guides" || page === "guide" || page === "author") return "guides";
     if ((page === "shop" || page === "item") && apparel.has(cat)) return "apparel";
     if ((page === "shop" || page === "item") && lifestyle.has(cat)) return "lifestyle";
-    if (page === "shop" || page === "item") return "shop";
+    if (page === "shop" || page === "item" || page === "brands") return "shop";
     return "";
   }
 
@@ -259,7 +260,7 @@
       const items = suggestionsFor(q);
       hitsBox.innerHTML = items.length
         ? items.map((item) => `
-            <a class="search-suggest" href="shop.html?q=${encodeURIComponent(item.text)}">
+            <a class="search-suggest" href="/finds/?q=${encodeURIComponent(item.text)}">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
               </svg>
@@ -273,7 +274,7 @@
       const q = (value != null ? value : searchInput.value).trim();
       if (!q) return;
       KF.track("search", { search_term: q });
-      location.href = "shop.html?q=" + encodeURIComponent(q);
+      location.href = "/finds/?q=" + encodeURIComponent(q);
     }
 
     searchInput.addEventListener("input", () => {
@@ -324,7 +325,7 @@
         }
         return;
       }
-      const shopLink = e.target.closest('a[href*="shop.html"]');
+      const shopLink = e.target.closest("a[href]");
       if (!shopLink) return;
       let dest;
       try {
@@ -332,11 +333,13 @@
       } catch (_) {
         return;
       }
-      if (!/shop\.html$/i.test(dest.pathname)) return;
-      const cat = dest.searchParams.get("cat") || "";
       const q = dest.searchParams.get("q") || "";
       const sort = dest.searchParams.get("sort") || "";
       const qc = dest.searchParams.get("qc") || "";
+      const catMatch = dest.pathname.match(/^\/([a-z0-9-]+)\/?$/i);
+      const known = new Set([...KF.nav.apparel, ...KF.nav.lifestyle].map((c) => c.slug));
+      const cat = dest.searchParams.get("cat") || (catMatch && known.has(catMatch[1]) ? catMatch[1] : "");
+      if (!q && !cat && !sort && qc !== "1") return;
       if (q) {
         KF.track("search", { search_term: q });
         return;

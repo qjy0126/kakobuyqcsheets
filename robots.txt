@@ -2,6 +2,12 @@
 User-agent: *
 Allow: /
 
+# Search and sort variants canonicalise back to the clean URL.
+Disallow: /*?q=
+Disallow: /*?page=
+Disallow: /*?sort=
+Disallow: /*?qc=
+
 User-agent: GPTBot
 Allow: /
 
@@ -41,4 +47,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://kakobuyqcsheets.com/sitemap.xml
+Sitemap: https://kakobuyqcsheets.com/sitemap-index.xml
