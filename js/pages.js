@@ -238,44 +238,6 @@
       });
     };
     $("#buy-link").addEventListener("click", trackBuyKakobuy);
-    const buyGrid = $("#buy-grid");
-    if (buyGrid) {
-      buyGrid.addEventListener("click", (e) => {
-        const pick = e.target.closest(".buy-pick");
-        if (pick && pick.getAttribute("data-agent") === "kakobuy") trackBuyKakobuy();
-      });
-    }
-    const agents = KF.agents || [];
-    fill("buy-grid", agents.map((agent) => `
-      <a class="buy-pick" data-agent="${agent.id}" href="${KF.agentUrl(agent.id, item.sourceUrl)}" target="_blank" rel="noopener">
-        <span class="buy-mark"><img src="${agent.logo}" alt=""></span>
-        <span class="buy-pick-copy">
-          <b>${agent.name}</b>
-          <small>Opens ${agent.name} in a new tab</small>
-        </span>
-        <span class="buy-pick-go" aria-hidden="true">›</span>
-      </a>
-    `).join(""));
-    const buyLayer = $("#buy-layer");
-    const openBuy = () => {
-      if (!buyLayer) return;
-      buyLayer.hidden = false;
-      buyLayer.classList.add("show");
-    };
-    const closeBuy = () => {
-      if (!buyLayer) return;
-      buyLayer.classList.remove("show");
-      buyLayer.hidden = true;
-    };
-    const chooseBtn = $("#choose-buy-alt");
-    if (chooseBtn) chooseBtn.addEventListener("click", openBuy);
-    const buyClose = $("#buy-close");
-    if (buyClose) buyClose.addEventListener("click", closeBuy);
-    if (buyLayer) {
-      buyLayer.addEventListener("click", (e) => {
-        if (e.target === buyLayer) closeBuy();
-      });
-    }
     fill("crumbs", `
       <a href="index.html">Home</a><span>/</span>
       <a href="shop.html">Shop</a><span>/</span>

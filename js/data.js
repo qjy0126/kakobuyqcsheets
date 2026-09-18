@@ -93,7 +93,7 @@ KF.applyExtraCategories = () => {
 
 KF.money = (n) => `$${n.toFixed(2)}`;
 KF.invite = {
-  kakobuy: "f6xmh",
+  kakobuy: "9v88f",
   oopbuy: "R28A1X6T7",
   mulebuy: "201207480",
   acbuy: "XQFW6M",
