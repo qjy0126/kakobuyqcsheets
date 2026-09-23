@@ -232,24 +232,15 @@
     $("#item-rating").innerHTML = `${KF.ui.stars(item.rating)} ${item.qc ? "QC photos on this find" : "No QC flag yet"} · ${item.source}`;
     $("#item-main").src = local;
     $("#item-main").alt = item.title;
-    $("#buy-link").href = KF.kakobuyUrl(item.sourceUrl);
-    $("#sheet-link").href = KF.site.sheetUrl;
+    const buyLink = $("#buy-link");
+    if (buyLink) buyLink.href = KF.kakobuyUrl(item.sourceUrl);
+    const sheetLink = $("#sheet-link");
+    if (sheetLink) sheetLink.href = KF.site.sheetUrl;
     KF.track("view_item", {
       currency: "USD",
       value: Number(item.price) || 0,
       items: KF.gaItem(item),
     });
-    const trackBuyKakobuy = () => {
-      KF.track("buy_kakobuy", {
-        agent: "kakobuy",
-        item_id: String(item.id),
-        item_name: item.title || "",
-        currency: "USD",
-        value: Number(item.price) || 0,
-        items: KF.gaItem(item),
-      });
-    };
-    $("#buy-link").addEventListener("click", trackBuyKakobuy);
     fill("crumbs", `
       <a href="/">Home</a><span>/</span>
       <a href="${KF.findsPath()}">Shop</a><span>/</span>
@@ -335,10 +326,7 @@
       else closeLayer();
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeBuy();
-        closeLayer();
-      }
+      if (e.key === "Escape") closeLayer();
     });
 
     const id = itemIdFrom(item);

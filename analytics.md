@@ -8,7 +8,7 @@
 
 ## buy_kakobuy
 
-点「Buy on Kakobuy」。
+点「Buy on Kakobuy」或任意跳转 `kakobuy.com` 的购买链接（不含注册页）。
 
 | 参数 | 含义 |
 | --- | --- |
@@ -18,6 +18,17 @@
 | `value` | 价格 |
 | `currency` | `USD` |
 | `items` | 见下方商品结构 |
+| `link_url` | 点击的 Kakobuy 链接 |
+| `page_path` | 当前页路径 |
+
+## signup_kakobuy
+
+点 Kakobuy 注册 / 领券链接（`/register`）。
+
+| 参数 | 含义 |
+| --- | --- |
+| `link_url` | 注册链接 |
+| `page_path` | 当前页路径 |
 
 ## view_item / select_item
 

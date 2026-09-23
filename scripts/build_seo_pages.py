@@ -29,8 +29,8 @@ ASSETS = """  <link rel="icon" href="/img/favicon.png" type="image/png" />
   </script>"""
 SCRIPTS = """  <script src="/js/data.js?v=11"></script>
   <script src="/js/catalog.js?v=7"></script>
-  <script src="/js/ui.js?v=11"></script>
-  <script src="/js/pages.js?v=11"></script>"""
+  <script src="/js/ui.js?v=12"></script>
+  <script src="/js/pages.js?v=12"></script>"""
 
 CAT_LABELS = {
     "shoes": "Shoes",

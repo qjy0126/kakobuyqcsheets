@@ -313,6 +313,37 @@
         if (term) KF.track("search", { search_term: term });
         return;
       }
+      const kakobuy = e.target.closest("a[href*='kakobuy.com']");
+      if (kakobuy) {
+        const href = kakobuy.href || "";
+        if (/\/register/i.test(href)) {
+          KF.track("signup_kakobuy", { link_url: href, page_path: location.pathname });
+          return;
+        }
+        const id = document.body.dataset.itemId || kakobuy.dataset.buy || "";
+        const item = id
+          ? (KF.products || []).find((p) => String(p.id) === String(id))
+          : null;
+        if (item) {
+          KF.track("buy_kakobuy", {
+            agent: "kakobuy",
+            item_id: String(item.id),
+            item_name: item.title || "",
+            currency: "USD",
+            value: Number(item.price) || 0,
+            items: KF.gaItem(item),
+            link_url: href,
+            page_path: location.pathname,
+          });
+        } else {
+          KF.track("buy_kakobuy", {
+            agent: "kakobuy",
+            link_url: href,
+            page_path: location.pathname,
+          });
+        }
+        return;
+      }
       const card = e.target.closest("a.product-card");
       if (card) {
         const id = card.getAttribute("data-id") || "";
