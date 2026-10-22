@@ -237,6 +237,8 @@
     const sheetLink = $("#sheet-link");
     if (sheetLink) sheetLink.href = KF.site.sheetUrl;
     KF.track("view_item", {
+      item_id: String(item.id),
+      item_name: KF.itemName(item),
       currency: "USD",
       value: Number(item.price) || 0,
       items: KF.gaItem(item),

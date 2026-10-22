@@ -20,17 +20,11 @@ ASSETS = """  <link rel="icon" href="/img/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Montserrat:ital,wght@0,700;0,800;1,700;1,800&family=Nunito:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-48MV974LBV"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-48MV974LBV');
-  </script>"""
-SCRIPTS = """  <script src="/js/data.js?v=11"></script>
+  <script src="/js/analytics.js"></script>"""
+SCRIPTS = """  <script src="/js/data.js?v=14"></script>
   <script src="/js/catalog.js?v=7"></script>
-  <script src="/js/ui.js?v=12"></script>
-  <script src="/js/pages.js?v=12"></script>"""
+  <script src="/js/ui.js?v=14"></script>
+  <script src="/js/pages.js?v=14"></script>"""
 
 CAT_LABELS = {
     "shoes": "Shoes",

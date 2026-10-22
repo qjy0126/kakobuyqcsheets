@@ -318,38 +318,66 @@
         const href = kakobuy.href || "";
         if (/\/register/i.test(href)) {
           KF.track("signup_kakobuy", { link_url: href, page_path: location.pathname });
-          return;
-        }
-        const id = document.body.dataset.itemId || kakobuy.dataset.buy || "";
-        const item = id
-          ? (KF.products || []).find((p) => String(p.id) === String(id))
-          : null;
-        if (item) {
-          KF.track("buy_kakobuy", {
-            agent: "kakobuy",
-            item_id: String(item.id),
-            item_name: item.title || "",
-            currency: "USD",
-            value: Number(item.price) || 0,
-            items: KF.gaItem(item),
-            link_url: href,
-            page_path: location.pathname,
-          });
         } else {
-          KF.track("buy_kakobuy", {
-            agent: "kakobuy",
-            link_url: href,
-            page_path: location.pathname,
-          });
+          const id = document.body.dataset.itemId || kakobuy.dataset.buy || "";
+          const item = id
+            ? (KF.products || []).find((p) => String(p.id) === String(id))
+            : null;
+          if (item) {
+            KF.track("buy_kakobuy", {
+              agent: "kakobuy",
+              item_id: String(item.id),
+              item_name: KF.itemName(item),
+              currency: "USD",
+              value: Number(item.price) || 0,
+              items: KF.gaItem(item),
+              link_url: href,
+              page_path: location.pathname,
+            });
+          } else {
+            KF.track("buy_kakobuy", {
+              agent: "kakobuy",
+              link_url: href,
+              page_path: location.pathname,
+            });
+          }
         }
-        return;
       }
+      const out = e.target.closest("a[href]");
+      if (out) {
+        let url;
+        try { url = new URL(out.href, location.href); } catch (_) { url = null; }
+        if (url && url.origin !== location.origin && (url.protocol === "http:" || url.protocol === "https:")) {
+          const params = {
+            event_category: "outbound",
+            event_label: (out.textContent || out.getAttribute("aria-label") || "link").trim().slice(0, 80),
+            link_url: out.href,
+            link_domain: url.hostname,
+            outbound: true,
+            page_path: location.pathname,
+          };
+          const id = document.body.dataset.itemId || out.dataset.buy || "";
+          const item = id ? (KF.products || []).find((p) => String(p.id) === String(id)) : null;
+          if (item) {
+            params.item_id = String(item.id);
+            params.item_name = KF.itemName(item);
+            params.currency = "USD";
+            params.value = Number(item.price) || 0;
+            params.items = KF.gaItem(item);
+          }
+          KF.track("click", params);
+          KF.track("outbound_click", params);
+        }
+      }
+      if (kakobuy) return;
       const card = e.target.closest("a.product-card");
       if (card) {
         const id = card.getAttribute("data-id") || "";
         const item = (KF.products || []).find((p) => String(p.id) === String(id));
         if (item) {
           KF.track("select_item", {
+            item_id: String(item.id),
+            item_name: KF.itemName(item),
             item_list_name: document.body.dataset.page || "",
             items: KF.gaItem(item),
           });

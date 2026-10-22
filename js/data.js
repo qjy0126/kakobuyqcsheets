@@ -1,4 +1,9 @@
 window.KF = window.KF || {};
+if (!document.querySelector('script[src*="js/analytics.js"]')) {
+  const analytics = document.createElement("script");
+  analytics.src = "/js/analytics.js";
+  document.head.appendChild(analytics);
+}
 
 KF.site = {
   name: "Kakobuy Spreadsheet 2026",
@@ -175,11 +180,13 @@ KF.agents = [
 ];
 KF.kakobuyUrl = (sourceUrl) => KF.agentUrl("kakobuy", sourceUrl);
 
+KF.itemName = (p) => String((p && p.title) || "").replace(/\s+/g, " ").trim().slice(0, 100);
+
 KF.gaItem = (p) => {
   if (!p) return [];
   return [{
     item_id: String(p.id),
-    item_name: p.title || "",
+    item_name: KF.itemName(p),
     item_category: p.category || "",
     price: Number(p.price) || 0,
     quantity: 1,

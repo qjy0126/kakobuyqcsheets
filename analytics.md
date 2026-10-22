@@ -34,7 +34,7 @@
 
 打开某个商品详情页记 `view_item`。列表里点卡片会先记 `select_item`。
 
-`view_item` 带 `currency`、`value`、`items`。`select_item` 带 `item_list_name`（当前页，如 `shop` / `home` / `item`）和 `items`。
+两条都会带顶层 `item_id`、`item_name`（商品标题，最长 100 字），Firebase 事件参数里可以直接看到商品名。`view_item` 另外带 `currency`、`value`、`items`。`select_item` 另外带 `item_list_name`（当前页，如 `shop` / `home` / `item`）和 `items`。
 
 ## search
 
