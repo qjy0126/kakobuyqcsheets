@@ -9,7 +9,12 @@ KF.site = {
   name: "Kakobuy Spreadsheet 2026",
   domain: "kakobuyqcsheets.com",
   origin: "https://kakobuyqcsheets.com",
-  updated: "Sep 16, 2026",
+  get updated() {
+    return new Date().toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  },
+  get freshMonth() {
+    return new Date().toLocaleString("en-US", { month: "short", year: "numeric" });
+  },
   sheetUrl: "https://docs.google.com/spreadsheets/d/1ouCVXknU6RYgA1bhcB0g3cPV3yr0a210C4q7IWd1DOc/edit?gid=1593055287#gid=1593055287",
 };
 

@@ -28,6 +28,10 @@
     fill("post-grid", KF.posts.map(postCard).join(""));
     const sheet = $("#home-sheet-link");
     if (sheet) sheet.href = KF.site.sheetUrl;
+    const month = KF.site.freshMonth;
+    document.querySelectorAll("[data-fresh-month]").forEach((el) => {
+      el.textContent = month;
+    });
   }
 
   function pagerHtml(page, pages, cat, q, sort, qc) {
